@@ -5,5 +5,3 @@ const Part = ({ part }) => {
     </p>
   );
 }
-
-export default Part;
