@@ -4,10 +4,11 @@ import Filter from './components/Filter'
 import { useState } from 'react'
 
 const App = () => {
-  const [persons, setPersons] = useState([ ])
+  const [persons, setPersons] = useState([
+    {name:null, number:null}
+  ])
   const [newName, setNewName] = useState('') //newName用于控制input的value
   const [newNumber, setNewNumber] = useState('') //newNumber用于控制input的value
-  const [filter, setFilter] = useState('') //filter用于控制input的value
 
   const handleNameChange = (e) => {
     setNewName(e.target.value)
@@ -21,38 +22,20 @@ const App = () => {
 
   const handleAddPeron = (e) => {
     e.preventDefault()
-    const uniqueId = 'user_' + Date.now()
     const newPerson = {
       name: newName,
-      number: newNumber,
-      id: uniqueId,
+      number: newNumber
     }
-    if (persons.some((person) => person.name === newName)) {
-      alert(`${newName} is already added to the phonebook.`);
-    } else {
-      setPersons([...persons, newPerson]);
-      setNewName('');
-      setNewNumber('');
-    }
+    setPersons(persons.concat(newPerson))
+    setNewName('')
+    setNewNumber('')
+    console.log(persons)
   }
 
-  const handleDelete = (id) => {
-    const newPersons = persons.filter(person => person.id !== id)
-    setPersons(newPersons)
-  }
-
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value)
-  }
-  
-  const filteredPersons = persons.filter(person =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
-  );
-  
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filter={filter} handleFilterChange={handleFilterChange}/>
+      <Filter/>
       <h3>Add a new</h3>
       <PersonForm 
         newName={newName}
@@ -62,7 +45,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} handleDelete={handleDelete}/>
+      <Persons persons={persons}/>
     </div>
   )
 }

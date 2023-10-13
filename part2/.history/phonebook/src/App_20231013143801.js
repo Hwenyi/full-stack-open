@@ -34,6 +34,7 @@ const App = () => {
       setNewName('');
       setNewNumber('');
     }
+    console.log(persons)
   }
 
   const handleDelete = (id) => {
@@ -62,7 +63,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} handleDelete={handleDelete}/>
+      <Persons persons={persons} handleDelete={handleDelete}/>
     </div>
   )
 }

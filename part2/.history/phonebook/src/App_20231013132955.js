@@ -4,10 +4,11 @@ import Filter from './components/Filter'
 import { useState } from 'react'
 
 const App = () => {
-  const [persons, setPersons] = useState([ ])
+  const [persons, setPersons] = useState([
+    
+  ])
   const [newName, setNewName] = useState('') //newName用于控制input的value
   const [newNumber, setNewNumber] = useState('') //newNumber用于控制input的value
-  const [filter, setFilter] = useState('') //filter用于控制input的value
 
   const handleNameChange = (e) => {
     setNewName(e.target.value)
@@ -34,25 +35,18 @@ const App = () => {
       setNewName('');
       setNewNumber('');
     }
+    console.log(persons)
   }
 
   const handleDelete = (id) => {
-    const newPersons = persons.filter(person => person.id !== id)
-    setPersons(newPersons)
+    const updatedPersons = persons.filter((person) => person.id !== id);
+    setPersons(updatedPersons);
   }
-
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value)
-  }
-  
-  const filteredPersons = persons.filter(person =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
-  );
   
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filter={filter} handleFilterChange={handleFilterChange}/>
+      <Filter/>
       <h3>Add a new</h3>
       <PersonForm 
         newName={newName}
@@ -62,7 +56,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} handleDelete={handleDelete}/>
+      <Persons persons={persons} handleDelete={handleDelete}/>
     </div>
   )
 }

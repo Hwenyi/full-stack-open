@@ -34,25 +34,18 @@ const App = () => {
       setNewName('');
       setNewNumber('');
     }
+    console.log(persons)
   }
 
   const handleDelete = (id) => {
     const newPersons = persons.filter(person => person.id !== id)
     setPersons(newPersons)
   }
-
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value)
-  }
-  
-  const filteredPersons = persons.filter(person =>
-    person.name.toLowerCase().includes(filter.toLowerCase())
-  );
   
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter filter={filter} handleFilterChange={handleFilterChange}/>
+      <Filter/>
       <h3>Add a new</h3>
       <PersonForm 
         newName={newName}
@@ -62,7 +55,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h3>Numbers</h3>
-      <Persons persons={filteredPersons} handleDelete={handleDelete}/>
+      <Persons persons={persons} handleDelete={handleDelete}/>
     </div>
   )
 }

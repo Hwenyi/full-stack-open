@@ -34,6 +34,7 @@ const App = () => {
       setNewName('');
       setNewNumber('');
     }
+    console.log(persons)
   }
 
   const handleDelete = (id) => {
