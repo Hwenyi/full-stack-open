@@ -11,15 +11,8 @@ const App = () => {
   const [filter, setFilter] = useState('') //filter用于控制input的value
 
   useEffect(()=>{
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response=>{
-      setPersons(response.data)
-    })
-    .catch(error=>{
-      console.error('Error fetching initial date',error)
-    })
-  },[])
+    axios.get('http://localhost:3001/')
+  })
 
   const handleNameChange = (e) => {
     setNewName(e.target.value)

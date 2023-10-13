@@ -1,25 +1,13 @@
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import Filter from './components/Filter'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([ ])
   const [newName, setNewName] = useState('') //newName用于控制input的value
   const [newNumber, setNewNumber] = useState('') //newNumber用于控制input的value
   const [filter, setFilter] = useState('') //filter用于控制input的value
-
-  useEffect(()=>{
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response=>{
-      setPersons(response.data)
-    })
-    .catch(error=>{
-      console.error('Error fetching initial date',error)
-    })
-  },[])
 
   const handleNameChange = (e) => {
     setNewName(e.target.value)
