@@ -7,7 +7,6 @@ import axios from "axios";
 function App() {
   const [countries, setCountries] = useState([]);
   const [filter, setFilter] = useState("");
-  const [weather, setWeather] = useState("");
 
   useEffect(() => {
     axios
@@ -26,22 +25,12 @@ function App() {
     setFilter(e.target.value);
   };
 
-  const handleShow = (country) => {
-    setFilter(country.name.common);
-  };
-
-  const countriesToShow = countries.filter((country) =>
-    country.name.common.toLowerCase().includes(filter.toLowerCase())
-  );
+  const filteredCountries 
 
   return (
     <div>
       <Filter handleFilterChange={handleFilterChange} />
-      <Countries
-        countries={countriesToShow}
-        handleShow={handleShow}
-        setWeather={setWeather}
-      />
+      <Countries countries={countries} />
     </div>
   );
 }

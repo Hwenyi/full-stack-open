@@ -37,11 +37,7 @@ function App() {
   return (
     <div>
       <Filter handleFilterChange={handleFilterChange} />
-      <Countries
-        countries={countriesToShow}
-        handleShow={handleShow}
-        setWeather={setWeather}
-      />
+      <Countries countries={countriesToShow} handleShow={handleShow} />
     </div>
   );
 }

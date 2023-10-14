@@ -3,11 +3,11 @@ import Countries from "./components/Countries";
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
+import handleShow from "./../.history/src/components/Show_20231014162133";
 
 function App() {
   const [countries, setCountries] = useState([]);
   const [filter, setFilter] = useState("");
-  const [weather, setWeather] = useState("");
 
   useEffect(() => {
     axios
@@ -37,11 +37,7 @@ function App() {
   return (
     <div>
       <Filter handleFilterChange={handleFilterChange} />
-      <Countries
-        countries={countriesToShow}
-        handleShow={handleShow}
-        setWeather={setWeather}
-      />
+      <Countries countries={countriesToShow} handleShow={handleShow} />
     </div>
   );
 }

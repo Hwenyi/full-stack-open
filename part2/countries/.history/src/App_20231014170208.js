@@ -7,7 +7,6 @@ import axios from "axios";
 function App() {
   const [countries, setCountries] = useState([]);
   const [filter, setFilter] = useState("");
-  const [weather, setWeather] = useState("");
 
   useEffect(() => {
     axios
@@ -15,6 +14,20 @@ function App() {
       .then((response) => {
         console.log("promise fulfilled");
         setCountries(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    axios
+      .get("https://openweathermap.org", {
+        params: {
+          access_key: process.env.REACT_APP_API_KEY,
+          query: "{countriesToShow[0].capital}",
+        },
+      })
+      .then((response) => {
+        console.log("promise fulfilled");
         console.log(response.data);
       })
       .catch((error) => {
@@ -37,11 +50,7 @@ function App() {
   return (
     <div>
       <Filter handleFilterChange={handleFilterChange} />
-      <Countries
-        countries={countriesToShow}
-        handleShow={handleShow}
-        setWeather={setWeather}
-      />
+      <Countries countries={countriesToShow} handleShow={handleShow} />
     </div>
   );
 }

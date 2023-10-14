@@ -1,0 +1,1 @@
+const handleShow = (country) => {};
