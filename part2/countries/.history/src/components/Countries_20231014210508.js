@@ -15,7 +15,6 @@ const Countries = ({ countries, handleShow }) => {
         .get(url)
         .then((response) => {
           const weatherData = response.data;
-          console.log("promise fulfilled");
           setWeather(weatherData);
           console.log(weatherData);
         })
@@ -56,7 +55,7 @@ const Countries = ({ countries, handleShow }) => {
         <p>
           <b>temperature:</b> {weather.main.temp} Celsius
         </p>
-        <img src={weatherIconUrl} width="80" alt="weather" />
+        <img src={weatherIconUrl} width="80" />
         <p>wind {weather.wind.speed} m/s</p>
       </div>
     );

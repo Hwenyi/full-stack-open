@@ -15,7 +15,6 @@ const Countries = ({ countries, handleShow }) => {
         .get(url)
         .then((response) => {
           const weatherData = response.data;
-          console.log("promise fulfilled");
           setWeather(weatherData);
           console.log(weatherData);
         })

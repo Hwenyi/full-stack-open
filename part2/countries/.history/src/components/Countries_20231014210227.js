@@ -15,13 +15,37 @@ const Countries = ({ countries, handleShow }) => {
         .get(url)
         .then((response) => {
           const weatherData = response.data;
-          console.log("promise fulfilled");
           setWeather(weatherData);
           console.log(weatherData);
         })
         .catch((error) => {
           console.log("Error fetching weather data:", error);
         });
+      return (
+        <div>
+          <h2>{countries[0].name.common}</h2>
+          <p>capital {countries[0].capital}</p>
+          <p>area {countries[0].area}</p>
+
+          <h3>languages</h3>
+          <ul>
+            {Object.values(countries[0].languages).map((language) => (
+              <li key={language}>{language}</li>
+            ))}
+          </ul>
+          <img
+            src={countries[0].flags.png}
+            alt={`flag of ${countries[0].name.common}`}
+            width="200"
+          />
+          <h3>Weather in {countries[0].capital}</h3>
+          <p>
+            <b>temperature:</b> {weather.main.temp} Celsius
+          </p>
+          <img src={weatherIconUrl} width="80" alt="weather" />
+          <p>wind {weather.wind.speed} m/s</p>
+        </div>
+      );
     }
   }, [countries]);
 
@@ -35,31 +59,6 @@ const Countries = ({ countries, handleShow }) => {
   if (countries.length > 10) {
     return <p>Too many matches, specify another filter</p>;
   } else if (countries.length === 1) {
-    return (
-      <div>
-        <h2>{countries[0].name.common}</h2>
-        <p>capital {countries[0].capital}</p>
-        <p>area {countries[0].area}</p>
-
-        <h3>languages</h3>
-        <ul>
-          {Object.values(countries[0].languages).map((language) => (
-            <li key={language}>{language}</li>
-          ))}
-        </ul>
-        <img
-          src={countries[0].flags.png}
-          alt={`flag of ${countries[0].name.common}`}
-          width="200"
-        />
-        <h3>Weather in {countries[0].capital}</h3>
-        <p>
-          <b>temperature:</b> {weather.main.temp} Celsius
-        </p>
-        <img src={weatherIconUrl} width="80" alt="weather" />
-        <p>wind {weather.wind.speed} m/s</p>
-      </div>
-    );
   } else {
     return (
       <div>
