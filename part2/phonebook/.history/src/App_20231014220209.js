@@ -43,25 +43,8 @@ const App = () => {
       persons.some((person) => person.number === newNumber)
     ) {
       alert(`${newName} is already added to the phonebook.`);
-    } else if (persons.some((person) => person.name === newName)) {
-      const person = persons.find((person) => person.name === newName);
-      const confirm = window.confirm(
-        `${newName} is already added to the phonebook, replace the old number with a new one?`
-      );
-      if (confirm) {
-        const changedPerson = { ...person, number: newNumber };
-        personService
-          .update(changedPerson.id, changedPerson)
-          .then((returnedPerson) => {
-            setPersons(
-              persons.map((person) =>
-                person.id !== changedPerson.id ? person : returnedPerson
-              )
-            );
-            cleanForm();
-          });
-      }
     } else {
+      // setPersons([...persons, newPerson]);
       personService.create(newPerson).then((returnedPerson) => {
         setPersons([...persons, returnedPerson]);
         cleanForm();

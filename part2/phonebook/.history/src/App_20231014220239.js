@@ -62,6 +62,7 @@ const App = () => {
           });
       }
     } else {
+      // setPersons([...persons, newPerson]);
       personService.create(newPerson).then((returnedPerson) => {
         setPersons([...persons, returnedPerson]);
         cleanForm();

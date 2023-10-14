@@ -3,7 +3,6 @@ import Persons from "./components/Persons";
 import Filter from "./components/Filter";
 import { useEffect, useState } from "react";
 import personService from "./services/persons";
-import axios from "axios";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -38,45 +37,17 @@ const App = () => {
       number: newNumber,
       id: uniqueId,
     };
-    if (
-      persons.some((person) => person.name === newName) &&
-      persons.some((person) => person.number === newNumber)
-    ) {
+    if (persons.some((person) => person.name === newName)) {
       alert(`${newName} is already added to the phonebook.`);
-    } else if (persons.some((person) => person.name === newName)) {
-      const person = persons.find((person) => person.name === newName);
-      const confirm = window.confirm(
-        `${newName} is already added to the phonebook, replace the old number with a new one?`
-      );
-      if (confirm) {
-        const changedPerson = { ...person, number: newNumber };
-        personService
-          .update(changedPerson.id, changedPerson)
-          .then((returnedPerson) => {
-            setPersons(
-              persons.map((person) =>
-                person.id !== changedPerson.id ? person : returnedPerson
-              )
-            );
-            cleanForm();
-          });
-      }
     } else {
-      personService.create(newPerson).then((returnedPerson) => {
-        setPersons([...persons, returnedPerson]);
-        cleanForm();
-      });
+      setPersons([...persons, newPerson]);
+      cleanForm();
     }
   };
 
   const handleDelete = (id) => {
-    const person = persons.find((person) => person.id === id);
-    const confirm = window.confirm(`Delete ${person.name}?`);
-    if (confirm) {
-      personService.remove(id).then(() => {
-        setPersons(persons.filter((person) => person.id !== id));
-      });
-    }
+    const newPersons = persons.filter((person) => person.id !== id);
+    setPersons(newPersons);
   };
 
   const handleFilterChange = (e) => {
