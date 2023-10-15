@@ -49,7 +49,6 @@ const App = () => {
       setTimeout(() => {
         setErrorMessage(null);
       }, 5000);
-      alert(`${newName} is already added to the phonebook.`);
     } else if (persons.some((person) => person.name === newName)) {
       setErrorMessage(
         `${newName} is already added to the phonebook, replace the old number with a new one`
