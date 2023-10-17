@@ -1,22 +1,15 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
+const Person = require("./models/person");
+
 const app = express();
+const path = require("path");
 
+app.use(express.static(path.join(__dirname, "build")));
 app.use(express.json());
-app.use(express.static("build"));
-
-morgan.token("jsonBody", (req) => {
-  return JSON.stringify(req.body);
-});
-
-// 自定义 'tiny' 格式，包括请求体数据
-morgan.format(
-  "mytiny",
-  ":method :url :status :response-time ms - :res[content-length] :jsonBody"
-);
-
-// 添加中间件来解析请求体数据
-app.use(express.json());
+app.use(cors());
 
 // 将自定义格式 'mytiny' 配置到 Morgan 中间件
 app.use(
@@ -51,9 +44,13 @@ let persons = [
   },
 ];
 
-app.get("/", (request, response) => {
-  response.send("<h1>Hello World!</h1>");
-});
+// app.get("/", (req, res) => {
+//   res.sendFile(path.join(__dirname, "build", "index.html"));
+// });
+
+// app.get("/", (request, response) => {
+//   response.send("<h1>Hello World!</h1>");
+// });
 
 app.get("/info", (request, response) => {
   response.send(
@@ -102,7 +99,6 @@ app.post("/api/persons", (request, response) => {
   const person = {
     name: body.name,
     number: body.number,
-    id: generateId(),
   };
 
   if (persons.find((p) => p.name === person.name)) {
@@ -116,7 +112,7 @@ app.post("/api/persons", (request, response) => {
   response.json(person);
 });
 
-const PORT = 3001;
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });

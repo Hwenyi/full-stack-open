@@ -23,13 +23,43 @@ let notes = [
     important: true,
   },
 ];
+const mongoose = require("mongoose");
+
+// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+
+const password = "03621";
+
+const url = `mongodb+srv://fullstack:${password}@fullstack.l8nfhwj.mongodb.net/?retryWrites=true&w=majority`;
+
+mongoose.connect(url);
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  date: Date,
+  important: Boolean,
+});
+
+const Note = mongoose.model("Note", noteSchema);
+
+noteSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
 app.get("/", (request, response) => {
   response.send("<h1>Hello World!</h1>");
 });
 
+// app.get("/api/notes", (request, response) => {
+//   response.json(notes);
+// });
 app.get("/api/notes", (request, response) => {
-  response.json(notes);
+  Note.find({}).then((notes) => {
+    response.json(notes);
+  });
 });
 
 app.get("/api/notes/:id", (request, response) => {
