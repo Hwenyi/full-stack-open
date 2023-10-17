@@ -6,7 +6,7 @@ console.log("connecting to", url);
 
 mongoose
   .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((result) => {
+  .then((_result) => {
     console.log("connected to MongoDB");
   })
   .catch((error) => {
@@ -27,7 +27,7 @@ const personSchema = new mongoose.Schema({
 });
 
 personSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
+  transform: (_document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id; // eslint-disable-line
     delete returnedObject.__v; // eslint-disable-line
