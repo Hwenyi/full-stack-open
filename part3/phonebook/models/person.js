@@ -23,6 +23,13 @@ const personSchema = new mongoose.Schema({
     type: String,
     minlength: 8,
     required: true,
+    validate: {
+      validator: function (value) {
+        return /^\d{2,4}-\d{7,}$/g.test(value);
+      },
+      message:
+        "Invalid phone number format, please use the format: 123-4567890 or 09-1234556",
+    },
   },
 });
 
