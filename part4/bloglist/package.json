@@ -4,14 +4,15 @@
   "description": "博客列表的应用",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint .",
-    "dev": "nodemon index.js",
-    "test": "jest --verbose"
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand"
   },
   "author": "Hwenyi",
   "license": "MIT",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.51.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
@@ -25,7 +26,6 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "lodash": "^4.17.21",
