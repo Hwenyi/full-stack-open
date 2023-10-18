@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 2",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "dev": "nodemon index.js",
+    "test": "jest --verbose"
   },
   "author": "Hwenyi",
   "license": "MIT",
@@ -27,6 +28,7 @@
     "cross-env": "^7.0.3",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "lodash": "^4.17.21",
     "mongoose": "^7.6.3",
     "mongoose-unique-validator": "^4.0.0",
     "morgan": "^1.10.0",
