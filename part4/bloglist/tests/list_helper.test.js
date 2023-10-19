@@ -7,24 +7,6 @@ test('dummy returns one', () => {
   expect(result).toBe(1)
 })
 
-describe('total likes', () => {
-  const listWithOneBlog = [
-    {
-      _id: '5a422aa71b54a676234d17f8',
-      title: 'Go To Statement Considered Harmful',
-      author: 'Edsger W. Dijkstra',
-      url: 'http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html',
-      likes: 5,
-      __v: 0
-    }
-  ]
-
-  test('when list has only one blog, equals the likes of that', () => {
-    const result = listHelper.totalLikes(listWithOneBlog)
-    expect(result).toBe(5)
-  })
-})
-
 describe('favorite blog', () => {
   const blogs = [
     {
@@ -77,7 +59,7 @@ describe('favorite blog', () => {
   })
 })
 
-describe('most blogs', () => {
+describe('likes of total blogs', () => {
   const listWithOneBlog = [
     {
       _id: '5a422aa71b54a676234d17f8',
@@ -95,7 +77,7 @@ describe('most blogs', () => {
   })
 })
 
-describe('favorite blog', () => {
+describe('最多测试集', () => {
   const blogs = [
     {
       title: 'React patterns',
@@ -140,12 +122,12 @@ describe('favorite blog', () => {
       id: '5a422a851b54a676234d17fc',
     },
   ]
-  test('find the most favorite blog', () => {
+  test('找到创作数最多的博客作者', () => {
     const result = listHelper.mostBlogs(blogs)
     expect(result).toEqual({ author: 'Robert C. Martin', blogs: 3 })
   })
 
-  test('find the most favorite blog', () => {
+  test('找到赞最多的博客，输出作者和它的所有赞', () => {
     const result = listHelper.mostLikes(blogs)
     expect(result).toEqual({ author: 'Edsger W. Dijkstra', likes: 17 })
   })
