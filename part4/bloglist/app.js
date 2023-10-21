@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const logger = require('./utils/logger')
+const path = require('path')
 
 const usersRouter = require('./controller/users')
 const loginRouter = require('./controller/login')
@@ -23,7 +24,7 @@ mongoose
   })
 
 app.use(cors())
-app.use(express.static('build'))
+app.use(express.static(path.join(__dirname, 'build')))
 app.use(express.json())
 app.use(middleware.requestLogger)
 

@@ -4,6 +4,7 @@
   "description": "博客列表的应用",
   "main": "index.js",
   "scripts": {
+    "build": "node index.js",
     "start": "cross-env NODE_ENV=production node index.js",
     "lint": "eslint .",
     "dev": "cross-env NODE_ENV=development nodemon index.js",

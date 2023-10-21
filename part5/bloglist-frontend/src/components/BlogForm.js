@@ -1,25 +1,18 @@
 import { useState } from "react";
 
 const BlogForm = ({ createBlog }) => {
-    const [newBlog, setNewBlog] = useState({
-        title: "",
-        author: "",
-        url: "",
-    });
+  const [newBlog, setNewBlog] = useState({ title: "", author: "", url: "" });
 
-    const handleInputChange = (event) => {
-      const { name, value } = event.target;
-      setNewBlog({
-        ...newBlog,
-        [name]: value,
-      });
-    }
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setNewBlog({ ...newBlog, [name]: value });
+  };
 
-    const handleCreateBlog = (event) => {
-      event.preventDefault();
-      createBlog(newBlog.title, newBlog.author, newBlog.url)
-      setNewBlog({title: "", author: "", url: ""})
-    }
+  const handleCreateBlog = (event) => {
+    event.preventDefault();
+    createBlog(newBlog.title, newBlog.author, newBlog.url);
+    setNewBlog({ title: "", author: "", url: "" });
+  };
 
   return (
     <div>
