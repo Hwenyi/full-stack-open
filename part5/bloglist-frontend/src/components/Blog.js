@@ -6,24 +6,41 @@ const Blog = ({blog, updateLikes, deleteBlog, username}) => {
   const toggleVisibility = () => {
     setVisible(!visible)
   }
+
+  const handleLike=() =>{
+    const blogToUpdate = {
+      title: blog.title,
+      author: blog.author,
+      url: blog.url,
+      likes: blog.likes + 1,
+      uesr: blog.user.id
+    }
+    updateLikes(blog.id,blogToUpdate)
+  }
+
+  const handleDelete = () => {
+    if(window.confirm(`Remove blog ${blog.title} by ${blog.author}`)){
+      deleteBlog(blog.id)
+    }
+  }
   
   return (
-    <div>
+    <div className='blog'>
       <div>
-        <span>{blog.title}</span>
-        <span>{blog.author}</span>
+        <span className="title">{blog.title}</span>
+        <span classNmae="author">{blog.author}</span>
         <button id='view-btn' onClick={toggleVisibility}>{visible ? 'hide' : 'show'}</button>
       </div>
       {visible && (
-        <div>
+        <div className="blog-details">
           <div>{blog.url}</div>
           <div>
             Likes:{ blog.likes }{' '}
-            <button>Like</button>{' '}
+            <button id="like-btn" onClick={handleLike}>Like</button>{' '}
           </div>
           <div>{blog.user.name}</div>
           {blog.user.username === username && (
-            <button>
+            <button id="delete-btn" onClick={handleDelete}>
               delete
             </button>
           )}
