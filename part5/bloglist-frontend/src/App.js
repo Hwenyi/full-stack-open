@@ -22,7 +22,7 @@ const App = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setMessage([])
+      setMessage(null)
     }, 5000)
     return () => {
       clearTimeout(timer)
@@ -70,7 +70,7 @@ const App = () => {
       setBlogs(blogs.concat(blog))
       setMessage(`a new blog ${blog.title} by ${blog.author} added`)
     } catch (exception) {
-      setMessage(`error: ${exception.response.data.error}`)
+      setMessage("error" + exception.response.data.error)
     }
   }
 
@@ -78,15 +78,16 @@ const App = () => {
     try {
       const updatedBlog = await blogService.update(id,blogToUpdate)
       const newBlogs = blogs.map(blog => blog.id === id ? updatedBlog : blog)
+      setBlogs(newBlogs)
     } catch (exception) {
-      setMessage(`error: ${exception.response.data.error}`)
+      setMessage("error" + exception.response.data.error)
     }
   }
 
-  const deleteBlog = async(blogid) => {
+  const deleteBlog = async(blogId) => {
     try {
-      await blogService.remove(blogid)
-      const updatedBlogs = blogs.filter(blog => blog.id !== blogid)
+      await blogService.remove(blogId)
+      const updatedBlogs = blogs.filter(blog => blog.id !== blogId)
       setBlogs(updatedBlogs)
     } catch (exception) {
       setMessage(`error: ${exception.response.data.error}`)
@@ -96,6 +97,7 @@ const App = () => {
   return (
     <div>
       <h1 className='header-title'>Blogs</h1>
+      <h1>{message}</h1>
       <Notification message={message}/>
       {user === null ?(
         <LoginForm handleLogin={handleLogin}/>
