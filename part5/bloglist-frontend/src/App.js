@@ -1,21 +1,23 @@
-import { useState, useEffect } from 'react'
-// import Blog from './components/Blog'
+import { useRef, useState, useEffect } from 'react'
+import Blog from './components/Blog'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import Notification from './components/Notification'
 
 import loginService from './services/login'
+import BlogForm from './components/BlogForm'
+import Togglable from './components/Togglable'
 
 const App = () => {
-  // const [blogs, setBlogs] = useState([])
+  const [blogs, setBlogs] = useState([])
   const [message, setMessage] = useState(null)
   const [user,setUser] = useState(null)
 
-  // useEffect(() => {
-  //   blogService.getAll().then(blogs =>
-  //     setBlogs( blogs )
-  //   )  
-  // }, [])
+  useEffect(() => {
+    blogService.getAll().then(blogs =>
+      setBlogs( blogs )
+    )  
+  }, [])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -54,6 +56,8 @@ const App = () => {
     setUser(null);
   };
 
+  const BlogFormRef = useRef() 
+
   return (
     <div>
       <h1 className='header-title'>Blogs</h1>
@@ -66,6 +70,9 @@ const App = () => {
             <span className='active-user'>{user.name}</span> logged in{' '}
             <button id='logout-btn' onClick={handleLogout}>logout</button>
           </p>
+          <Togglable buttonLabel='new blog' ref={BlogFormRef}>
+            <BlogForm />
+          </Togglable>
         </div>
       )}
     </div>
