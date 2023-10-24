@@ -1,42 +1,21 @@
-const notificationAtStart = null
+import { useSelector } from 'react-redux'
 
-const initialState = notificationAtStart
-
-const notificationReducer = (state = initialState, action) => {
-  switch(action.type) {
-    case 'vote':
-      state = `you voted '${action.data}'`
-      break
-    case 'create':
-      state = action.data
-      break
-    case 'hide':
-      state = null
-      break
-    default:
-      break
+const Notification = () => {
+  const notification = useSelector(({notification}) => notification)
+  const style = {
+    border: 'solid',
+    padding: 10,
+    borderWidth: 1,
+    marginBottom: 5
   }
-  return state
+
+  if ( !notification) return null
+
+  return (
+    <div style={style}>
+      {notification}
+    </div>
+  )
 }
 
-export const voteNotification = (content) => {
-  return {
-    type: 'vote',
-    data: content
-  }
-}
-
-export const createNotification = (content) => {
-  return {
-    type: 'create',
-    data: content
-  }
-}
-
-export const hideNotification = () => {
-  return {
-    type: 'hide'
-  }
-}
-
-export default notificationReducer
+export default Notification
