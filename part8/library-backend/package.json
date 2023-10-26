@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Hwenyi",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server": "^3.12.1",
+    "graphql": "^16.8.1"
+  }
 }
