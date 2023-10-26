@@ -90,33 +90,32 @@ let books = [
 ]
 
 const typeDefs = gql`
-  type Query {
-    bookCount: Int!
-    authorCount: Int!
-    allBooks(author: String, genre: String): [Book!]!
-    allAuthors: [Author!]!
-  }
-
   type Book {
     title: String!
-    published: Int!
-    author: String!
-    genres: [String!]!
-    id: ID!
+    published: Int
+    author: String
+    id: ID
+    genres: [String]
   }
 
   type Author {
     name: String!
-    id: ID!
     born: Int
+    bookCount: Int
+  }
+
+  type Query {
     bookCount: Int!
+    authorCount: Int!
+    allBooks(author: String, genre: String): [Book!]!
+    allAuthors: [Author!]
   }
 
   type Mutation {
     addBook(
       title: String!
-      published: Int!
       author: String!
+      published: Int!
       genres: [String!]!
     ): Book
     editAuthor(name: String!, setBornTo: Int!): Author
@@ -127,44 +126,56 @@ const resolvers = {
   Query: {
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: (root, args) => {
-      //用户可以给出一个可选的参数作者。响应应该只包括由该作者写的书
-      //用户可以给出一个可选的参数genre。响应应该只包括包含该类型的书
-      if (args.author && args.genre) {
-        return books.filter(book => book.author === args.author && book.genres.includes(args.genre))
-      } else if (args.author) {
-        return books.filter(book => book.author === args.author)
-      } else if (args.genre) {
-        return books.filter(book => book.genres.includes(args.genre))
-      }
-    },
+    allBooks: (root, args) =>
+      args.author === undefined
+        ? args.genre === undefined
+          ? books
+          : books.filter(
+              book =>
+                book.genres.find(genre => genre === args.genre) !== undefined
+            )
+        : args.genres === undefined
+        ? books.filter(book => book.author === args.author)
+        : books.filter(
+            book =>
+              book.genres.find(genre => genre === args.genre) !== undefined &&
+              book.author === args.author
+          ),
     allAuthors: () => authors,
   },
-  Author: {//非原生的属性，得自己重载一遍
-    bookCount: (root) => {
-      return books.filter(book => book.author === root.name).length
-    }
+  Author: {
+    bookCount: root => {
+      let count = 0
+      books.forEach(book => book.author === root.name && count++)
+      return count
+    },
   },
-  Mutation:{
+  Mutation: {
     addBook: (root, args) => {
-      if (!authors.includes(args.author)) {
-        authors = authors.concat({ name: args.author, id: uuid() })
-      }
       const book = { ...args, id: uuid() }
       books = books.concat(book)
-      return book
+      if (authors.find(author => author.name === args.author) === undefined) {
+        const author = { name: args.author }
+        authors = authors.concat(author)
+      }
+      return {
+        title: args.title,
+        author: args.author,
+      }
     },
     editAuthor: (root, args) => {
-      const author = authors.find(author => author.name === args.name)
-      if (!author) {
+      let author = authors.find(a => a.name === args.name)
+      if (author === undefined) {
         return null
       }
-      const updatedAuthor = { ...author, born: args.setBornTo }
-      authors = authors.map(author => author.name === args.name ? updatedAuthor : author)
-      return updatedAuthor
-    }
-  }
-  
+      author = { ...author, born: args.setBornTo }
+      authors = authors.map(a => (a.name === args.name ? author : a))
+      return {
+        name: author.name,
+        born: author.born,
+      }
+    },
+  },
 }
 
 const server = new ApolloServer({
