@@ -9,7 +9,10 @@
   "author": "Hwenyi",
   "license": "MIT",
   "dependencies": {
+    "@apollo/server": "^4.9.4",
     "apollo-server": "^3.12.1",
-    "graphql": "^16.8.1"
+    "dotenv": "^16.3.1",
+    "graphql": "^16.8.1",
+    "mongoose": "^7.6.3"
   }
 }
