@@ -1,12 +1,12 @@
-import { ContentProps } from "../types"
+import { Props } from "../types"
 
-const Total = (props: ContentProps) => {
+const Total = ({ parts }: Props) => {
   return (
     <p>
       Number of exercises{" "}
-      {props.courseParts.reduce((carry, part) => carry + part.exerciseCount, 0)}
+      {parts.reduce((carry, part) => carry + part.exerciseCount, 0)}
     </p>
   )
-}
+};
 
-export default Total
+export default Total;

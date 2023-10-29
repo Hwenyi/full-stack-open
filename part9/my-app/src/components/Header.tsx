@@ -1,8 +1,7 @@
-import { HeaderProps } from "../types";
 
-const Header = (props: HeaderProps) => {
+const Header = ({text}: {text: string}) => {
   return (
-    <h1>{props.courseName}</h1>
+    <h1>{text}</h1>
   )
 }
 
