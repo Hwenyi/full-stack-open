@@ -16,8 +16,14 @@ const addPatient = (patient: NewPatient): Patient => {
   return newPatient;
 };
 
+const getOne = (id: string): Patient | undefined => {
+  return patients.find(p => p.id === id);
+};
+
+
 export default {
   getAllWithoutSsn,
-  addPatient
+  addPatient,
+  getOne
 };
 
